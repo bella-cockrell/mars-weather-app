@@ -1,27 +1,31 @@
 import React from 'react';
 import './App.css';
+import getWeather from './Components/getWeather';
 
-const API_KEY = 'uy2CVnMPW73mebP4g9UNEreDyu5hcDNNJeDQSk9K';
-const API_URL = `https://api.nasa.gov/insight_weather/?api_key=${API_KEY}&feedtype=json&ver=1.0`;
-
-const getWeather = () => {
-  fetch(API_URL)
-    .then(res => res.json())
-    .then(data => {
-      const {
-        sol_keys,
-        validity_checks,
-        ...solData
-      } = data
-      console.log(solData);
-    })
-}
-
-getWeather();
+getWeather().then((sols => {
+  console.log(sols);
+}));
 
 function App() {
   return (
     <div>
+      LATEST WEATHER AT ELYSIUM PLANTITIA
+
+      Sol 377
+      December 18
+
+      Temperature
+      High: -20°C
+      Low: -98°C
+
+      Wind
+      75 kph
+
+      InSight is taking daily weather measurements (temperature, wind, pressure)
+      on the surface of Mars at Elysium Planitia, a flat, smooth plain near Mars’
+      equator. This is only a part of InSight’s mission. <a href='https://mars.nasa.gov/insight/mission/overview/'>Click here</a>
+      to find out more.
+
 
     </div>
 
