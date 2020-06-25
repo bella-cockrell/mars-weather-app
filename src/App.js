@@ -1,14 +1,24 @@
 import React from 'react';
 import './App.css';
 import getWeather from './Components/getWeather';
+import Video from './Components/Video';
 
-getWeather().then((sols => {
-  console.log(sols);
-}));
+let selectedSolIndex;
+
+getWeather().then(sols => {
+  selectedSolIndex = sols.length - 1
+  displaySelectedSol(sols);
+});
+
+const displaySelectedSol = (sols) => {
+  const selectedSol = sols[selectedSolIndex];
+  console.log(selectedSol);
+}
 
 function App() {
   return (
     <div>
+      <Video />
       LATEST WEATHER AT ELYSIUM PLANTITIA
 
       Sol 377
