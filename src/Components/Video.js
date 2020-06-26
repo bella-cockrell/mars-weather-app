@@ -1,4 +1,4 @@
-import video from '../Images/Mars.mp4';
+import video from '../Media/mars.mp4';
 import React from 'react';
 
 const Video = () => {
