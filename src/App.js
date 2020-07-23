@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import './App.css'
 
-import Video from './Components/Video'
+import video from './Media/mars.mp4'
 import thermometer from './Media/thermometer.svg'
 import windCardinal from './Media/windCardinal.svg'
 import button from './Media/button.svg'
@@ -72,7 +72,7 @@ function App() {
   } else {
     return (
       <>
-        <Video />
+        <video src={video} width="600" height="auto" autoPlay={true} loop />
         <main className="mars-current-weather">
           <h1 className="scrolling-title">
             LATEST WEATHER AT ELYSIUM PLANTITIA
