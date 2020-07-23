@@ -1,8 +1,9 @@
-import React from 'react'
-import './App.css'
-import GetWeather from './Components/getWeather'
-import Video from './Components/Video'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
+import './App.css'
+
+import Video from './Components/Video'
 import thermometer from './Media/thermometer.svg'
 import windCardinal from './Media/windCardinal.svg'
 import button from './Media/button.svg'
@@ -19,43 +20,92 @@ import button from './Media/button.svg'
 //   console.log(selectedSol)
 // }
 
-function App() {
-  return (
-    <>
-      <Video />
-      <GetWeather />
-      <main className="mars-current-weather">
-        <h1 className="scrolling-title">LATEST WEATHER AT ELYSIUM PLANTITIA</h1>
-        <section className="current-date">
-          <button className="btn__current-date--left">
-            <img src={button} alt="button" />
-          </button>
-          {/* <h2 className='current-date__mars'>
-            Sol 377
-          </h2> */}
-          <div className="current-date__earth">December 18</div>
-          <button className="btn__current-date--right">
-            <img src={button} alt="button" />
-          </button>
-        </section>
-        <section className="readings">
-          <div className="readings__temperature">
-            <img src={thermometer} alt="thermometer" />
-            <h2>Temperature</h2>
-            <p>High: -20°C</p>
-            <p>Low: -98°C</p>
-          </div>
-          <div className="readings__wind">
-            <img src={windCardinal} alt="cardinal" />
-            <h2>Wind</h2>
-            <p>75 kph</p>
-          </div>
-        </section>
-      </main>
+const API_KEY = 'DEMO_KEY'
+const API_URL = `https://api.nasa.gov/insight_weather/?api_key=${API_KEY}&feedtype=json&ver=1.0`
 
-      <footer className="glance">At a glance</footer>
-    </>
-  )
+function App() {
+  const [loading, isLoading] = useState(false)
+  const [weather, setWeather] = useState({
+    sol: 0,
+    maxTemp: 0,
+    minTemp: 0,
+    windSpeed: 0,
+    windDirectionDegrees: 0,
+    windDirectionCardinal: '',
+    date: '0',
+  })
+
+  console.log(weather.date)
+
+  useEffect(() => {
+    axios
+      .get(API_URL)
+      .then((res) => res.data)
+      .then((data) => {
+        const { sol_keys, validity_checks, ...solData } = data
+        let temp = Object.entries(solData).map(([sol, data]) => {
+          return {
+            sol: sol,
+            maxTemp: data.AT.mx,
+            minTemp: data.AT.mn,
+            windSpeed: data.HWS.av,
+            windDirectionDegrees: data.WD.most_common.compass_degrees,
+            windDirectionCardinal: data.WD.most_common.compass_point,
+            date: data.First_UTC,
+          }
+        })
+        setWeather({
+          sol: temp[temp.length - 1].sol,
+          maxTemp: temp[temp.length - 1].maxTemp,
+          minTemp: temp[temp.length - 1].minTemp,
+          windSpeed: temp[temp.length - 1].windSpeed,
+          windDirectionDegrees: temp[temp.length - 1].windDirectionDegrees,
+          windDirectionCardinal: temp[temp.length - 1].windDirectionCardinal,
+          date: temp[temp.length - 1].date,
+        })
+        isLoading(true)
+      })
+      .catch((err) => console.log('Error ' + err))
+  }, [setWeather])
+  if (!loading) {
+    return 'Loading'
+  } else {
+    return (
+      <>
+        <Video />
+        <main className="mars-current-weather">
+          <h1 className="scrolling-title">
+            LATEST WEATHER AT ELYSIUM PLANTITIA
+          </h1>
+          <section className="current-date">
+            <button className="btn__current-date--left">
+              <img src={button} alt="button" />
+            </button>
+            <h2 className="current-date__mars">Sol {weather.sol}</h2>
+            <div className="current-date__earth">{weather.date}</div>
+            <button className="btn__current-date--right">
+              <img src={button} alt="button" />
+            </button>
+          </section>
+          <section className="readings">
+            <div className="readings__temperature">
+              <img src={thermometer} alt="thermometer" />
+              <h2>Temperature</h2>
+              <p>High: {weather.maxTemp}</p>
+              <p>Low: {weather.minTemp}</p>
+            </div>
+            <div className="readings__wind">
+              <img src={windCardinal} alt="cardinal" />
+              <h2>Wind</h2>
+              <p>{weather.windSpeed} kph</p>
+            </div>
+          </section>
+        </main>
+
+        <footer className="glance">At a glance</footer>
+      </>
+    )
+  }
 }
 
 export default App
