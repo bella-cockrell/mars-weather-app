@@ -20,6 +20,7 @@ import button from './Media/button.svg'
 //   console.log(selectedSol)
 // }
 
+
 const API_KEY = 'DEMO_KEY'
 const API_URL = `https://api.nasa.gov/insight_weather/?api_key=${API_KEY}&feedtype=json&ver=1.0`
 
@@ -35,33 +36,33 @@ function App() {
     date: '0',
   })
 
-  console.log(weather.date)
 
   useEffect(() => {
     axios
-      .get(API_URL)
-      .then((res) => res.data)
-      .then((data) => {
-        const { sol_keys, validity_checks, ...solData } = data
-        let temp = Object.entries(solData).map(([sol, data]) => {
-          return {
-            sol: sol,
-            maxTemp: data.AT.mx,
-            minTemp: data.AT.mn,
-            windSpeed: data.HWS.av,
-            windDirectionDegrees: data.WD.most_common.compass_degrees,
-            windDirectionCardinal: data.WD.most_common.compass_point,
-            date: data.First_UTC,
-          }
-        })
-        setWeather({
-          sol: temp[temp.length - 1].sol,
-          maxTemp: temp[temp.length - 1].maxTemp,
-          minTemp: temp[temp.length - 1].minTemp,
-          windSpeed: temp[temp.length - 1].windSpeed,
-          windDirectionDegrees: temp[temp.length - 1].windDirectionDegrees,
-          windDirectionCardinal: temp[temp.length - 1].windDirectionCardinal,
-          date: temp[temp.length - 1].date,
+    .get(API_URL)
+    .then((res) => res.data)
+    .then((data) => {
+      const { sol_keys, validity_checks, ...solData } = data
+      let temp = Object.entries(solData).map(([sol, data]) => {
+        return {
+          sol: sol,
+          maxTemp: data.AT.mx,
+          minTemp: data.AT.mn,
+          windSpeed: data.HWS.av,
+          windDirectionDegrees: data.WD.most_common.compass_degrees,
+          windDirectionCardinal: data.WD.most_common.compass_point,
+          date: data.First_UTC,
+        }
+      })
+      let handleIndex = temp[temp.length - 1]
+      setWeather({
+          sol: handleIndex.sol,
+          maxTemp: handleIndex.maxTemp,
+          minTemp: handleIndex.minTemp,
+          windSpeed: handleIndex.windSpeed,
+          windDirectionDegrees: handleIndex.windDirectionDegrees,
+          windDirectionCardinal: handleIndex.windDirectionCardinal,
+          date: handleIndex.date,
         })
         isLoading(true)
       })
