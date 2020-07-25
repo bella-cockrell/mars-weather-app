@@ -7,3 +7,15 @@ button {
   border: none;
   outline: none;
 }
+
+.current-date {
+  display: flex;
+}
+
+.btn__current-date--left {
+  transform: rotate(180deg);
+}
+
+#hide-button {
+  display: none;
+}
