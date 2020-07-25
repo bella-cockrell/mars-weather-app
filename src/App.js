@@ -54,7 +54,7 @@ function App() {
       .then((res) => res.data)
       .then((data) => {
         const { sol_keys, validity_checks, ...solData } = data
-        let temp = Object.entries(solData).map(([sol, data]) => {
+        let sevenSol = Object.entries(solData).map(([sol, data]) => {
           return {
             sol: sol,
             maxTemp: data.AT.mx,
@@ -65,18 +65,17 @@ function App() {
             date: data.First_UTC,
           }
         })
-        let handleIndex = temp[temp.length - 1]
         setWeather({
-          sol: handleIndex.sol,
-          maxTemp: handleIndex.maxTemp,
-          minTemp: handleIndex.minTemp,
-          windSpeed: handleIndex.windSpeed,
-          windDirectionDegrees: handleIndex.windDirectionDegrees,
-          windDirectionCardinal: handleIndex.windDirectionCardinal,
-          date: handleIndex.date,
+          sol: sevenSol.sol,
+          maxTemp: sevenSol.maxTemp,
+          minTemp: sevenSol.minTemp,
+          windSpeed: sevenSol.windSpeed,
+          windDirectionDegrees: sevenSol.windDirectionDegrees,
+          windDirectionCardinal: sevenSol.windDirectionCardinal,
+          date: sevenSol.date,
         })
         isLoading(true)
-        console.log(temp)
+        console.log(sevenSol)
       })
       .catch((err) => console.log('Error ' + err))
   }, [])
