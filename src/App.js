@@ -9,8 +9,6 @@ import thermometer from './Media/thermometer.svg'
 import windCardinal from './Media/windCardinal.svg'
 import button from './Media/button.svg'
 
-
-
 // let selectedSolIndex
 
 // getWeather().then((sols) => {
@@ -35,11 +33,7 @@ const parseDate = (date) => {
 
 function App() {
   const [loading, isLoading] = useState(false)
-  /*
-  const [sol, setSol] = useState(0);
-  const [maxTemp, setMaxTemp];
-
-  */
+  const [index, setIndex] = useState(0)
   const [weather, setWeather] = useState({
     sol: 0,
     maxTemp: 0,
@@ -50,13 +44,21 @@ function App() {
     date: '0',
   })
 
+  const handleNextDay = () => {
+    setIndex(index + 1)
+  }
+
+  const handlePreviousDay = () => {
+    setIndex(index - 1)
+  }
+
   useEffect(() => {
     axios
       .get(API_URL)
       .then((res) => res.data)
       .then((data) => {
         const { sol_keys, validity_checks, ...solData } = data
-        let sevenSol = Object.entries(solData).map(([sol, data]) => {
+        let solDays = Object.entries(solData).map(([sol, data]) => {
           return {
             sol: sol,
             maxTemp: data.AT.mx,
@@ -67,38 +69,42 @@ function App() {
             date: data.First_UTC,
           }
         })
+        let selectedDay = solDays[index]
         setWeather({
-          sol: sevenSol.sol,
-          maxTemp: sevenSol.maxTemp,
-          minTemp: sevenSol.minTemp,
-          windSpeed: sevenSol.windSpeed,
-          windDirectionDegrees: sevenSol.windDirectionDegrees,
-          windDirectionCardinal: sevenSol.windDirectionCardinal,
-          date: sevenSol.date,
+          sol: selectedDay.sol,
+          maxTemp: selectedDay.maxTemp,
+          minTemp: selectedDay.minTemp,
+          windSpeed: selectedDay.windSpeed,
+          windDirectionDegrees: selectedDay.windDirectionDegrees,
+          windDirectionCardinal: selectedDay.windDirectionCardinal,
+          date: selectedDay.date,
         })
         isLoading(true)
-        console.log(sevenSol)
       })
       .catch((err) => console.log('Error ' + err))
-  }, [])
+  }, [index])
 
   if (!loading) {
     return 'Loading'
   } else {
     return (
       <>
+        {console.log(weather)}
         <video src={video} width="600" height="auto" autoPlay={true} loop />
         <main className="mars-current-weather">
           <h1 className="scrolling-title">
             LATEST WEATHER AT ELYSIUM PLANTITIA
           </h1>
           <section className="current-date">
-            <button className="btn__current-date--left">
+            <button className="btn__current-date--left" onClick={handleNextDay}>
               <img src={button} alt="button" />
             </button>
             <h2 className="current-date__mars">Sol {weather.sol}</h2>
             <div className="current-date__earth">{parseDate(weather.date)}</div>
-            <button className="btn__current-date--right">
+            <button
+              className="btn__current-date--right"
+              onClick={handlePreviousDay}
+            >
               <img src={button} alt="button" />
             </button>
           </section>
