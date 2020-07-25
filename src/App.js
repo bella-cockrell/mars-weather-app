@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+// import fetchWeatherData from './Components/fetchWeatherData'
 import axios from 'axios'
 
 import './App.css'
@@ -20,12 +21,23 @@ import button from './Media/button.svg'
 //   console.log(selectedSol)
 // }
 
-
 const API_KEY = 'DEMO_KEY'
 const API_URL = `https://api.nasa.gov/insight_weather/?api_key=${API_KEY}&feedtype=json&ver=1.0`
 
+function parseDate(date) {
+  return new Date(date).toLocaleDateString(undefined, {
+    day: 'numeric',
+    month: 'long',
+  })
+}
+
 function App() {
   const [loading, isLoading] = useState(false)
+  /*
+  const [sol, setSol] = useState(0);
+  const [maxTemp, setMaxTemp];
+
+  */
   const [weather, setWeather] = useState({
     sol: 0,
     maxTemp: 0,
@@ -36,26 +48,25 @@ function App() {
     date: '0',
   })
 
-
   useEffect(() => {
     axios
-    .get(API_URL)
-    .then((res) => res.data)
-    .then((data) => {
-      const { sol_keys, validity_checks, ...solData } = data
-      let temp = Object.entries(solData).map(([sol, data]) => {
-        return {
-          sol: sol,
-          maxTemp: data.AT.mx,
-          minTemp: data.AT.mn,
-          windSpeed: data.HWS.av,
-          windDirectionDegrees: data.WD.most_common.compass_degrees,
-          windDirectionCardinal: data.WD.most_common.compass_point,
-          date: data.First_UTC,
-        }
-      })
-      let handleIndex = temp[temp.length - 1]
-      setWeather({
+      .get(API_URL)
+      .then((res) => res.data)
+      .then((data) => {
+        const { sol_keys, validity_checks, ...solData } = data
+        let temp = Object.entries(solData).map(([sol, data]) => {
+          return {
+            sol: sol,
+            maxTemp: data.AT.mx,
+            minTemp: data.AT.mn,
+            windSpeed: data.HWS.av,
+            windDirectionDegrees: data.WD.most_common.compass_degrees,
+            windDirectionCardinal: data.WD.most_common.compass_point,
+            date: data.First_UTC,
+          }
+        })
+        let handleIndex = temp[temp.length - 1]
+        setWeather({
           sol: handleIndex.sol,
           maxTemp: handleIndex.maxTemp,
           minTemp: handleIndex.minTemp,
@@ -65,9 +76,11 @@ function App() {
           date: handleIndex.date,
         })
         isLoading(true)
+        console.log(temp)
       })
       .catch((err) => console.log('Error ' + err))
-  }, [setWeather])
+  }, [])
+
   if (!loading) {
     return 'Loading'
   } else {
@@ -83,7 +96,7 @@ function App() {
               <img src={button} alt="button" />
             </button>
             <h2 className="current-date__mars">Sol {weather.sol}</h2>
-            <div className="current-date__earth">{weather.date}</div>
+            <div className="current-date__earth">{parseDate(weather.date)}</div>
             <button className="btn__current-date--right">
               <img src={button} alt="button" />
             </button>
