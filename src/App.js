@@ -9,18 +9,6 @@ import thermometer from './Media/thermometer.svg'
 import windCardinal from './Media/windCardinal.svg'
 import button from './Media/button.svg'
 
-// let selectedSolIndex
-
-// getWeather().then((sols) => {
-//   selectedSolIndex = sols.length - 1
-//   displaySelectedSol(sols)
-// })
-
-// const displaySelectedSol = (sols) => {
-//   const selectedSol = sols[selectedSolIndex]
-//   console.log(selectedSol)
-// }
-
 const API_KEY = 'DEMO_KEY'
 const API_URL = `https://api.nasa.gov/insight_weather/?api_key=${API_KEY}&feedtype=json&ver=1.0`
 
@@ -32,8 +20,9 @@ const parseDate = (date) => {
 }
 
 function App() {
-  const [loading, isLoading] = useState(false)
-  const [index, setIndex] = useState(0)
+  const [loaded, setLoaded] = useState(false)
+  const [hideButton, setHideButton] = useState('')
+  const [solIndex, setSolIndex] = useState(6) //API returns 7 days, index 6 is latest day
   const [weather, setWeather] = useState({
     sol: 0,
     maxTemp: 0,
@@ -45,11 +34,19 @@ function App() {
   })
 
   const handleNextDay = () => {
-    setIndex(index + 1)
+    if (solIndex >= 6) {
+      setHideButton(hideButton === 'hide-button')
+    } else {
+      setSolIndex(solIndex + 1)
+    }
   }
 
   const handlePreviousDay = () => {
-    setIndex(index - 1)
+    if (solIndex <= 0) {
+      setHideButton(hideButton === 'hide-button')
+    } else {
+      setSolIndex(solIndex - 1)
+    }
   }
 
   useEffect(() => {
@@ -69,7 +66,7 @@ function App() {
             date: data.First_UTC,
           }
         })
-        let selectedDay = solDays[index]
+        let selectedDay = solDays[solIndex]
         setWeather({
           sol: selectedDay.sol,
           maxTemp: selectedDay.maxTemp,
@@ -79,12 +76,12 @@ function App() {
           windDirectionCardinal: selectedDay.windDirectionCardinal,
           date: selectedDay.date,
         })
-        isLoading(true)
+        setLoaded(true)
       })
       .catch((err) => console.log('Error ' + err))
-  }, [index])
+  }, [solIndex])
 
-  if (!loading) {
+  if (!loaded) {
     return 'Loading'
   } else {
     return (
@@ -96,14 +93,17 @@ function App() {
             LATEST WEATHER AT ELYSIUM PLANTITIA
           </h1>
           <section className="current-date">
-            <button className="btn__current-date--left" onClick={handleNextDay}>
+            <button
+              className="btn__current-date--left"
+              onClick={handlePreviousDay}
+            >
               <img src={button} alt="button" />
             </button>
             <h2 className="current-date__mars">Sol {weather.sol}</h2>
             <div className="current-date__earth">{parseDate(weather.date)}</div>
             <button
               className="btn__current-date--right"
-              onClick={handlePreviousDay}
+              onClick={handleNextDay}
             >
               <img src={button} alt="button" />
             </button>
