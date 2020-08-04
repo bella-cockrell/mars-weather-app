@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import './App.css'
 
-import video from './Media/mars.mp4'
+// import video from './Media/mars.mp4'
 import thermometer from './Media/thermometer.svg'
 import windCardinal from './Media/windCardinal.svg'
 import button from './Media/button.svg'
@@ -22,14 +22,13 @@ const parseDate = (date) => {
 function App() {
   const [loaded, setLoaded] = useState(false)
   const [hideButton, setHideButton] = useState('')
-  const [solIndex, setSolIndex] = useState(6) //API returns 7 days, index 6 is latest day
+  const [solIndex, setSolIndex] = useState(5) //API returns 7 days, index 6 is latest day
   const [weather, setWeather] = useState({
     sol: 0,
     maxTemp: 0,
     minTemp: 0,
     windSpeed: 0,
     windDirectionDegrees: 0,
-    windDirectionCardinal: '',
     date: '0',
   })
 
@@ -42,7 +41,7 @@ function App() {
   }
 
   const handlePreviousDay = () => {
-    if (solIndex <= 0) {
+    if (solIndex === 0) {
       setHideButton(hideButton === 'hide-button')
     } else {
       setSolIndex(solIndex - 1)
@@ -55,25 +54,29 @@ function App() {
       .then((res) => res.data)
       .then((data) => {
         const { sol_keys, validity_checks, ...solData } = data
+        console.log(solData)
         let solDays = Object.entries(solData).map(([sol, data]) => {
-          return {
-            sol: sol,
-            maxTemp: data.AT.mx,
-            minTemp: data.AT.mn,
-            windSpeed: data.HWS.av,
-            windDirectionDegrees: data.WD.most_common.compass_degrees,
-            windDirectionCardinal: data.WD.most_common.compass_point,
-            date: data.First_UTC,
+          if (data.HWS === undefined) {
+            return 'Error'
+          } else {
+            return {
+              sol: sol,
+              maxTemp: data.AT.mx,
+              minTemp: data.AT.mn,
+              windSpeed: data.HWS.av,
+              windDirectionDegrees: data.WD.most_common.compass_degrees,
+              date: data.First_UTC,
+            }
           }
         })
         let selectedDay = solDays[solIndex]
+        console.log(selectedDay)
         setWeather({
           sol: selectedDay.sol,
           maxTemp: selectedDay.maxTemp,
           minTemp: selectedDay.minTemp,
           windSpeed: selectedDay.windSpeed,
           windDirectionDegrees: selectedDay.windDirectionDegrees,
-          windDirectionCardinal: selectedDay.windDirectionCardinal,
           date: selectedDay.date,
         })
         setLoaded(true)
@@ -86,8 +89,7 @@ function App() {
   } else {
     return (
       <>
-        {console.log(weather)}
-        <video src={video} width="600" height="auto" autoPlay={true} loop />
+        {/* <video src={video} width="600" height="auto" autoPlay={true} loop /> */}
         <main className="mars-current-weather">
           <h1 className="scrolling-title">
             LATEST WEATHER AT ELYSIUM PLANTITIA
@@ -96,6 +98,7 @@ function App() {
             <button
               className="btn__current-date--left"
               onClick={handlePreviousDay}
+              //add ID here?
             >
               <img src={button} alt="button" />
             </button>
