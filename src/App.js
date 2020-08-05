@@ -149,7 +149,7 @@ function App() {
           </section>
         </main>
 
-        <footer className="glance">At a glance</footer>
+        {/* <footer className="glance">At a glance</footer> */}
       </>
     )
   }
