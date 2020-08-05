@@ -74,32 +74,41 @@ body {
 /*current date*/
 .current-date {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 10vh 0;
 }
 
-.current-date-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.current-date-info__mars {
-  color: var(--white);
-  font-size: 36pt;
-}
-
-.current-date-info__earth {
-  color: var(--grey);
-}
-
-button {
+.current-date button {
   background-color: transparent;
   border: none;
   outline: none;
   width: 50px;
   height: 50px;
+  flex-grow: 1;
 }
 
 .btn__current-date--left {
   transform: rotate(180deg);
+}
+
+.current-date-info {
+  flex-direction: column;
+  flex-grow: 2;
+}
+
+.current-date-info__mars {
+  color: var(--white);
+  font-size: 12vw;
+  margin: 0;
+  text-align: center;
+}
+
+.current-date-info__earth {
+  color: var(--grey);
+  font-size: 10vw;
+  margin: 0;
+  text-align: center;
 }
 
 .readings {
