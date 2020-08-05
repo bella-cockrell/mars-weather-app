@@ -103,13 +103,16 @@ function App() {
               <span>LATEST WEATHER AT ELYSIUM PLANTITIA</span>
               <span>LATEST WEATHER AT ELYSIUM PLANTITIA</span>
               <span>LATEST WEATHER AT ELYSIUM PLANTITIA</span>
+              <span>LATEST WEATHER AT ELYSIUM PLANTITIA</span>
+              <span>LATEST WEATHER AT ELYSIUM PLANTITIA</span>
+              <span>LATEST WEATHER AT ELYSIUM PLANTITIA</span>
             </div>
           </div>
+
           <section className="current-date">
             <button
               className="btn__current-date--left"
               onClick={handlePreviousDay}
-              //add ID here?
             >
               <img src={button} alt="button" />
             </button>
@@ -126,6 +129,7 @@ function App() {
               <img src={button} alt="button" />
             </button>
           </section>
+
           <section className="readings">
             <div className="readings__temperature">
               <img src={thermometer} alt="thermometer" />

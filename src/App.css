@@ -28,6 +28,7 @@ body {
   z-index: -1;
 }
 
+/* marquee */
 .marquee {
   position: relative;
   overflow: hidden;
@@ -43,7 +44,7 @@ body {
   display: flex;
   position: relative;
   transform: translateX(var(--move-initial));
-  animation: marquee 10s infinite linear;
+  animation: marquee 30s infinite linear;
   animation-play-state: running;
 }
 
@@ -70,6 +71,7 @@ body {
   }
 }
 
+/*current date*/
 .current-date {
   display: flex;
 }
