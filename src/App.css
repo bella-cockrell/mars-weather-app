@@ -1,9 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&display=swap');
+
 .App {
-  text-align: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#button {
-  background: none;
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-image: url(./Media/mars.mp4);
+  background-color: black;
+}
+
+#background-video {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  transform: scale(2) translateY(-25%);
+}
+
+.btn {
+  /* background-image: url(./Media/button.svg); */
+  /* background-color: transparent; */
   border: none;
   outline: none;
 }

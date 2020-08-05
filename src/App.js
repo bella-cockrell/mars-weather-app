@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import './App.css'
 
-// import video from './Media/mars.mp4'
+import video from './Media/mars.mp4'
 import thermometer from './Media/thermometer.svg'
 import windCardinal from './Media/windCardinal.svg'
 import button from './Media/button.svg'
@@ -54,7 +54,6 @@ function App() {
       .then((res) => res.data)
       .then((data) => {
         const { sol_keys, validity_checks, ...solData } = data
-        console.log(solData)
         let solDays = Object.entries(solData).map(([sol, data]) => {
           if (data.HWS === undefined) {
             return 'Error'
@@ -70,7 +69,6 @@ function App() {
           }
         })
         let selectedDay = solDays[solIndex]
-        console.log(selectedDay)
         setWeather({
           sol: selectedDay.sol,
           maxTemp: selectedDay.maxTemp,
@@ -89,7 +87,16 @@ function App() {
   } else {
     return (
       <>
-        {/* <video src={video} width="600" height="auto" autoPlay={true} loop /> */}
+        <video
+          src={video}
+          type="video/mp4"
+          autoPlay
+          muted
+          loop
+          id="background-video"
+        >
+          no video
+        </video>
         <main className="mars-current-weather">
           <h1 className="scrolling-title">
             LATEST WEATHER AT ELYSIUM PLANTITIA
