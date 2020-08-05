@@ -28,10 +28,46 @@ body {
   z-index: -1;
 }
 
-.scrolling-title {
+.marquee {
+  position: relative;
+  overflow: hidden;
+  padding: 2vh;
+  margin: 4vh 0vh 4vh 0vh;
+  --offset: 0vw;
+  --move-initial: calc(0% + var(--offset));
+  --move-final: calc(-75% + var(--offset));
+}
+
+.marquee__inner {
+  width: fit-content;
+  display: flex;
+  position: relative;
+  transform: translateX(var(--move-initial));
+  animation: marquee 10s infinite linear;
+  animation-play-state: running;
+}
+
+.marquee__inner span {
+  white-space: nowrap;
+  width: 100%;
+  text-transform: uppercase;
   color: var(--red);
-  font-size: 18pt;
+  font-size: 2.5vh;
   font-weight: 500;
+  padding: 0 2vw;
+}
+
+.marquee:hover .marquee__inner {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(var(--move-initial));
+  }
+  to {
+    transform: translateX(var(--move-final));
+  }
 }
 
 .current-date {

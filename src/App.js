@@ -98,9 +98,13 @@ function App() {
           no video
         </video>
         <main className="mars-current-weather">
-          <h1 className="scrolling-title">
-            LATEST WEATHER AT ELYSIUM PLANTITIA
-          </h1>
+          <div className="marquee">
+            <div className="marquee__inner">
+              <span>LATEST WEATHER AT ELYSIUM PLANTITIA</span>
+              <span>LATEST WEATHER AT ELYSIUM PLANTITIA</span>
+              <span>LATEST WEATHER AT ELYSIUM PLANTITIA</span>
+            </div>
+          </div>
           <section className="current-date">
             <button
               className="btn__current-date--left"
@@ -111,7 +115,9 @@ function App() {
             </button>
             <div className="current-date-info">
               <h2 className="current-date-info__mars">Sol {weather.sol}</h2>
-              <p className="current-date-info__earth">{parseDate(weather.date)}</p>
+              <p className="current-date-info__earth">
+                {parseDate(weather.date)}
+              </p>
             </div>
             <button
               className="btn__current-date--right"
