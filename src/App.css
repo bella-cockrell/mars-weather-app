@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&display=swap');
 
+:root {
+  --red: #d06d6d;
+  --white: #ffffff;
+  --grey: rgba(255, 255, 255, 0.5);
+}
+
 .App {
   margin: 0;
   padding: 0;
@@ -19,21 +25,52 @@ body {
   width: 100%;
   height: auto;
   transform: scale(2) translateY(-25%);
+  z-index: -1;
 }
 
-.btn {
-  /* background-image: url(./Media/button.svg); */
-  /* background-color: transparent; */
-  border: none;
-  outline: none;
+.scrolling-title {
+  color: var(--red);
+  font-size: 18pt;
+  font-weight: 500;
 }
 
 .current-date {
   display: flex;
 }
 
+.current-date-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.current-date-info__mars {
+  color: var(--white);
+  font-size: 36pt;
+}
+
+.current-date-info__earth {
+  color: var(--grey);
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 50px;
+  height: 50px;
+}
+
 .btn__current-date--left {
   transform: rotate(180deg);
+}
+
+.readings {
+  display: flex;
+}
+
+.readings__temperature {
+  outline: red;
+  color: var(-red);
 }
 
 #hide-button {

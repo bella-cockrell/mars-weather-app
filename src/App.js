@@ -109,8 +109,10 @@ function App() {
             >
               <img src={button} alt="button" />
             </button>
-            <h2 className="current-date__mars">Sol {weather.sol}</h2>
-            <div className="current-date__earth">{parseDate(weather.date)}</div>
+            <div className="current-date-info">
+              <h2 className="current-date-info__mars">Sol {weather.sol}</h2>
+              <p className="current-date-info__earth">{parseDate(weather.date)}</p>
+            </div>
             <button
               className="btn__current-date--right"
               onClick={handleNextDay}
