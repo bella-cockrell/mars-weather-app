@@ -39,3 +39,13 @@ body {
 #hide-button {
   display: none;
 }
+
+@media screen and (min-width: 700px) {
+  #background-video {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transform: scale(1.25) translateY(-10%);
+  }
+}
