@@ -71,8 +71,8 @@ function App() {
         let selectedDay = solDays[solIndex]
         setWeather({
           sol: selectedDay.sol,
-          maxTemp: selectedDay.maxTemp,
-          minTemp: selectedDay.minTemp,
+          maxTemp: Math.floor(selectedDay.maxTemp * 100) / 100,
+          minTemp: Math.floor(selectedDay.minTemp * 100) / 100,
           windSpeed: selectedDay.windSpeed,
           windDirectionDegrees: selectedDay.windDirectionDegrees,
           date: selectedDay.date,
@@ -144,7 +144,7 @@ function App() {
                 <img src={windCardinal} alt="cardinal" />
               </div>
               <h2>Wind</h2>
-              <p>{weather.windSpeed} kph</p>
+              <p>{Math.round(weather.windSpeed)} kph</p>
             </div>
           </section>
         </main>
