@@ -2,7 +2,7 @@
 
 <img src='src/Media/mars.png' alt='mars' width='200px/'>
 
-Welcome to the Mars Weather App! This app uses Nasa's [Insight: Mars Weather Service API](https://api.nasa.gov/assets/insight/InSight%20Weather%20API%20Documentation.pdf) which is free to use.
+Welcome to the Mars Weather App! This app uses Nasa's [Insight: Mars Weather Service API](https://api.nasa.gov/assets/insight/InSight%20Weather%20API%20Documentation.pdf) to show the weather from the last seven days. The live website is available [here](https://mars-daily-weather-app.netlify.app/).
 
 ## Scripts
 
