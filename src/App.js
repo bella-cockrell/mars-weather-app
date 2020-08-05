@@ -132,13 +132,17 @@ function App() {
 
           <section className="readings">
             <div className="readings__temperature">
-              <img src={thermometer} alt="thermometer" />
+              <div className="readings__img">
+                <img src={thermometer} alt="thermometer" />
+              </div>
               <h2>Temperature</h2>
               <p>High: {weather.maxTemp}</p>
               <p>Low: {weather.minTemp}</p>
             </div>
             <div className="readings__wind">
-              <img src={windCardinal} alt="cardinal" />
+              <div className="readings__img">
+                <img src={windCardinal} alt="cardinal" />
+              </div>
               <h2>Wind</h2>
               <p>{weather.windSpeed} kph</p>
             </div>

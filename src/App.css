@@ -5,19 +5,16 @@
   --white: #ffffff;
   --grey: rgba(255, 255, 255, 0.5);
 }
-
 .App {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: 'Montserrat', sans-serif;
   background-image: url(./Media/mars.mp4);
   background-color: black;
 }
-
 #background-video {
   position: fixed;
   bottom: 0;
@@ -38,7 +35,6 @@ body {
   --move-initial: calc(0% + var(--offset));
   --move-final: calc(-75% + var(--offset));
 }
-
 .marquee__inner {
   width: fit-content;
   display: flex;
@@ -47,7 +43,6 @@ body {
   animation: marquee 30s infinite linear;
   animation-play-state: running;
 }
-
 .marquee__inner span {
   white-space: nowrap;
   width: 100%;
@@ -57,11 +52,9 @@ body {
   font-weight: 500;
   padding: 0 2vw;
 }
-
 .marquee:hover .marquee__inner {
   animation-play-state: paused;
 }
-
 @keyframes marquee {
   from {
     transform: translateX(var(--move-initial));
@@ -76,9 +69,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 0 10vh 0;
+  margin: 0 0 5vh 0;
 }
-
 .current-date button {
   background-color: transparent;
   border: none;
@@ -87,23 +79,19 @@ body {
   height: 50px;
   flex-grow: 1;
 }
-
 .btn__current-date--left {
   transform: rotate(180deg);
 }
-
 .current-date-info {
   flex-direction: column;
   flex-grow: 2;
 }
-
 .current-date-info__mars {
   color: var(--white);
   font-size: 12vw;
   margin: 0;
   text-align: center;
 }
-
 .current-date-info__earth {
   color: var(--grey);
   font-size: 10vw;
@@ -111,13 +99,39 @@ body {
   text-align: center;
 }
 
+/*readings*/
 .readings {
   display: flex;
+  justify-content: center;
 }
-
+.readings__temperature h2,
+.readings__wind h2 {
+  text-align: center;
+  color: var(--red);
+  font-size: 18pt;
+  line-height: 1.5;
+  margin: 0;
+}
+.readings__temperature p,
+.readings__wind p {
+  text-align: center;
+  color: var(--white);
+  font-weight: 500;
+  font-size: 18pt;
+  margin: 0;
+}
+.readings__img {
+  display: block;
+  text-align: center;
+  margin: 5px;
+}
 .readings__temperature {
-  outline: red;
-  color: var(-red);
+  flex-grow: 1;
+  position: relative;
+}
+.readings__wind {
+  flex-grow: 1;
+  position: relative;
 }
 
 #hide-button {
@@ -131,5 +145,11 @@ body {
     left: 0;
     width: 100%;
     transform: scale(1.25) translateY(-10%);
+  }
+  .current-date-info__mars {
+    font-size: 48pt;
+  }
+  .current-date-info__earth {
+    font-size: 32pt;
   }
 }
